@@ -74,5 +74,31 @@ public class UnitTest1
     }
 
 
+// Tests for Color Generator
+    [Fact]
+    public void TestColorGeneration()
+    {
+        var (hex, rgb) = RandomFunctions.GenerateRandomColor();
+
+        Assert.Matches(@"^#[0-9A-Fa-f]{6}$", hex);
+        Assert.InRange(rgb.Item1, 0, 255);
+        Assert.InRange(rgb.Item2, 0, 255);
+        Assert.InRange(rgb.Item3, 0, 255);
+
+        string expectedHex = $"#{rgb.Item1:X2}{rgb.Item2:X2}{rgb.Item3:X2}";
+        Assert.Equal(expectedHex, hex);
+    }
+
+// Additional test to verify multiple generated colors are different
+    [Fact]
+    public void TestColorGenerationUniqueness()
+    {
+        var color1 = RandomFunctions.GenerateRandomColor();
+        var color2 = RandomFunctions.GenerateRandomColor();
+
+        Assert.NotEqual(color1, color2);
+    }
+}
+
     }
 }
