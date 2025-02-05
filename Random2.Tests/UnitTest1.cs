@@ -47,5 +47,32 @@ public class UnitTest1
                     "Value should be within a reasonable range.");
     }
 
+
+// Tests for Password Generator
+    [Theory]
+    [InlineData(6)]
+    [InlineData(10)]
+    [InlineData(20)]
+    public void TestPasswordGeneration(int length)
+    {
+        string password = RandomFunctions.GeneratePassword(length);
+
+        Assert.Equal(length, password.Length);
+        Assert.Matches(@"^[A-Za-z0-9_]+$", password);
+    }
+
+
+    // Edge case: Minimum and Maximum Length Passwords
+    [Fact]
+    public void TestPasswordGenerationMinMaxLength()
+    {
+        string minPassword = RandomFunctions.GeneratePassword(1);
+        string maxPassword = RandomFunctions.GeneratePassword(100);
+
+        Assert.Equal(1, minPassword.Length);
+        Assert.Equal(100, maxPassword.Length);
+    }
+
+
     }
 }
